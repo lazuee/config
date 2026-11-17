@@ -1,0 +1,6 @@
+[tools]
+bun = "1.4"
+node = "26"
+
+[env]
+_.file = ".env"

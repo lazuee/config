@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "usernamehw.errorlens",
+    "oxc.oxc-vscode",
+    "yoavbls.pretty-ts-errors",
+    "shardulm94.trailing-spaces",
+    "typescriptteam.native-preview"
+  ]
+}

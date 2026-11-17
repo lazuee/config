@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.node.json",
+  "include": ["**/*.ts", "tools/oxlint/config/anti-slop/index.mjs"],
+  "compilerOptions": {
+    "types": ["bun"],
+    "paths": {
+      "@oxlint/*": ["./tools/oxlint/*"],
+      "@shared/*": ["./tools/shared/*"],
+      "@/*": ["./*"]
+    }
+  }
+}
