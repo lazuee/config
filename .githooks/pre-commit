@@ -1,0 +1,38 @@
+#!/bin/sh
+# Keep the committed `.dist/` bundle in step with source.
+#
+# `.dist/` is tracked because `github:` installs raw-clone the repo and ignore
+# `files`, so whatever is committed is what consumers run. CI catches drift
+# after the push; this catches it before the commit exists.
+#
+# Only runs when the staged set touches `tools/`, the source the bundle is
+# built from, so doc, config and vet-only commits stay instant.
+
+staged="$(git diff --cached --name-only --diff-filter=ACMR)"
+
+[ -n "$staged" ] || exit 0
+
+# `.dist/` committed by itself is the fix, not the drift.
+if ! printf '%s\n' "$staged" | grep -vq '^\.dist/'; then
+  exit 0
+fi
+
+printf '%s\n' "$staged" | grep -q '^tools/' || exit 0
+
+if ! bun run build >/dev/null 2>&1; then
+  echo "pre-commit: build failed, run 'bun run build' to see why" >&2
+  exit 1
+fi
+
+if ! git diff --quiet -- .dist; then
+  echo "pre-commit: .dist/ is stale — staging the rebuilt bundle" >&2
+  git add .dist
+fi
+
+stray="$(git ls-files --others --exclude-standard -- .dist)"
+if [ -n "$stray" ]; then
+  echo "pre-commit: staging untracked files under .dist/" >&2
+  printf '%s\n' "$stray" | xargs git add --
+fi
+
+exit 0

@@ -2,6 +2,7 @@ export const ignorePatterns = [
   "**/node_modules",
   "**/.git",
 
+  "**/.dist",
   "**/dist",
   "**/build",
   "**/out",

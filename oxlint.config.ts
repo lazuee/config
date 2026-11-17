@@ -1,6 +1,6 @@
 import { defineConfig } from "oxlint";
 
-import config from "./dist/tools/oxlint/config/index.js";
+import config from "./.dist/tools/oxlint/config/index.js";
 
 /**
  * Dogfood the published preset, with repo-local exceptions: the vendored
@@ -9,5 +9,5 @@ import config from "./dist/tools/oxlint/config/index.js";
  */
 export default defineConfig({
   extends: [config],
-  ignorePatterns: [".dist-staging", "tools/oxlint/config/vendors/*.ts"],
+  ignorePatterns: [".dist", ".dist-staging", "tools/oxlint/config/vendors/*.ts"],
 });

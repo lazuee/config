@@ -4,7 +4,7 @@ import path from "node:path";
 const repoRoot = path.resolve(import.meta.dir, "../../..");
 
 /** Built plugin bundle, and the oxlint binary the integration fixtures drive */
-export const pluginBundle = path.join(repoRoot, "dist", "tools", "oxlint", "rules", "index.js");
+export const pluginBundle = path.join(repoRoot, ".dist", "tools", "oxlint", "rules", "index.js");
 export const oxBinary = path.join(repoRoot, "node_modules", ".bin", "oxlint");
 
 function buildPlugin(): void {
@@ -21,7 +21,7 @@ function buildPlugin(): void {
 }
 
 /**
- * The built plugin bundle, building it once per test process when `dist` is
+ * The built plugin bundle, building it once per test process when `/.dist` is
  * absent. Integration tests drive the real `oxlint` binary, which needs the
  * bundle; making that implicit keeps a fresh clone from silently skipping them
  */

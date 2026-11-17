@@ -7,7 +7,7 @@ import { $ } from "bun";
 import data from "@/package.json";
 
 const cwd = path.resolve(import.meta.dirname, "..");
-const outdir = path.join(cwd, "dist");
+const outdir = path.join(cwd, ".dist");
 const staging = path.join(cwd, ".dist-staging");
 
 await rm(staging, { force: true, recursive: true });
@@ -87,7 +87,7 @@ interface StagingDir {
  * tsc follows transitive imports, so it also emits declarations for files that
  * are already bundled into an entrypoint (`rule.d.ts`, `tsconfig-aliases.d.ts`).
  * Keep only what sits next to an entrypoint, then prune the directories their
- * removals emptied, otherwise `rm` leaves bare folders behind in `dist`.
+ * removals emptied, otherwise `rm` leaves bare folders behind in `/.dist`.
  */
 function planStagingPrune(directory: string): StagingDir {
   const plan: StagingDir = { path: directory, subdirs: [], doomed: [], keptCount: 0 };
@@ -141,7 +141,7 @@ if (!result.success) {
 
 // Sizes are only readable while the outputs still live in the staging dir
 const artifacts = result.outputs.map((output) => ({
-  name: path.relative(cwd, output.path).replace(`.dist-staging${path.sep}`, "dist/"),
+  name: path.relative(cwd, output.path).replace(`.dist-staging${path.sep}`, ".dist/"),
   size: output.size,
 }));
 

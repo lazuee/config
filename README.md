@@ -140,17 +140,48 @@ self-contained bundles pinned to a commit (`anti-slop`, `no-comment-slop`,
 `shadcn`). They are generated — never edit them; re-run
 `bun run scripts/build-vendors.ts [ref] [--check]` after bumping a ref.
 
+## Installing
+
+`.dist/` is committed, so a direct install needs no build step:
+
+```sh
+bun add -d github:lazuee/config
+```
+
+Lifecycle scripts stay blocked by default and nothing is lost; the package is
+consumed as shipped.
+
 ## Development
 
 ```sh
-bun run build        # bundle tools/ into dist/ (also emits declarations)
+bun run build        # bundle tools/ into .dist/ (also emits declarations)
+```
+
+`.dist/` is build output that is deliberately tracked: `github:` installs
+raw-clone the repo and ignore `files`, so the only way a consumer reaches the
+package is via committed output. Re-run `bun run build` and commit the result
+whenever source changes, otherwise consumers get a stale bundle. `prepare` is
+intentionally absent — it would need `bun pm trust` and `@types/bun`.
+
+A committed hook keeps the bundle honest, and is worth enabling once per
+clone since `core.hooksPath` is not itself committed:
+
+```sh
+git config core.hooksPath .githooks
+```
+
+It rebuilds and stages `.dist/` when a commit touches build inputs, and skips
+doc-only commits. CI runs the same check, so a missing hook cannot land drift
+on `main`.
+
+```sh
 bun run check        # lint, format check, typecheck, tests
 bun run test         # tests
 bun run lint:agent   # lint with warnings as errors and agent output
 ```
 
 The repo dogfoods its own preset through `oxlint.config.ts`, which imports the
-built `dist/`, so build before linting.
+built `.dist/`, so build before linting.
 
 ### Toolchain
 

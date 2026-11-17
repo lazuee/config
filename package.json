@@ -3,61 +3,61 @@
   "version": "0.0.1",
   "description": "Shared TypeScript, Oxlint, and Oxfmt configs for my projects.",
   "files": [
-    "dist",
+    ".dist",
     "scripts",
     "*.json"
   ],
   "type": "module",
   "exports": {
     "./oxfmt": {
-      "types": "./dist/tools/oxfmt/index.d.ts",
-      "import": "./dist/tools/oxfmt/index.js",
-      "default": "./dist/tools/oxfmt/index.js"
+      "types": "./.dist/tools/oxfmt/index.d.ts",
+      "import": "./.dist/tools/oxfmt/index.js",
+      "default": "./.dist/tools/oxfmt/index.js"
     },
     "./oxlint": {
-      "types": "./dist/tools/oxlint/config/index.d.ts",
-      "import": "./dist/tools/oxlint/config/index.js",
-      "default": "./dist/tools/oxlint/config/index.js"
+      "types": "./.dist/tools/oxlint/config/index.d.ts",
+      "import": "./.dist/tools/oxlint/config/index.js",
+      "default": "./.dist/tools/oxlint/config/index.js"
     },
     "./oxlint/rules": {
-      "types": "./dist/tools/oxlint/rules/index.d.ts",
-      "import": "./dist/tools/oxlint/rules/index.js",
-      "default": "./dist/tools/oxlint/rules/index.js"
+      "types": "./.dist/tools/oxlint/rules/index.d.ts",
+      "import": "./.dist/tools/oxlint/rules/index.js",
+      "default": "./.dist/tools/oxlint/rules/index.js"
     },
     "./oxlint/core": {
-      "types": "./dist/tools/oxlint/config/core/index.d.ts",
-      "import": "./dist/tools/oxlint/config/core/index.js",
-      "default": "./dist/tools/oxlint/config/core/index.js"
+      "types": "./.dist/tools/oxlint/config/core/index.d.ts",
+      "import": "./.dist/tools/oxlint/config/core/index.js",
+      "default": "./.dist/tools/oxlint/config/core/index.js"
     },
     "./oxlint/js-plugins": {
-      "types": "./dist/tools/oxlint/config/js-plugins/index.d.ts",
-      "import": "./dist/tools/oxlint/config/js-plugins/index.js",
-      "default": "./dist/tools/oxlint/config/js-plugins/index.js"
+      "types": "./.dist/tools/oxlint/config/js-plugins/index.d.ts",
+      "import": "./.dist/tools/oxlint/config/js-plugins/index.js",
+      "default": "./.dist/tools/oxlint/config/js-plugins/index.js"
     },
     "./oxlint/react": {
-      "types": "./dist/tools/oxlint/config/react/index.d.ts",
-      "import": "./dist/tools/oxlint/config/react/index.js",
-      "default": "./dist/tools/oxlint/config/react/index.js"
+      "types": "./.dist/tools/oxlint/config/react/index.d.ts",
+      "import": "./.dist/tools/oxlint/config/react/index.js",
+      "default": "./.dist/tools/oxlint/config/react/index.js"
     },
     "./oxlint/remix": {
-      "types": "./dist/tools/oxlint/config/remix/index.d.ts",
-      "import": "./dist/tools/oxlint/config/remix/index.js",
-      "default": "./dist/tools/oxlint/config/remix/index.js"
+      "types": "./.dist/tools/oxlint/config/remix/index.d.ts",
+      "import": "./.dist/tools/oxlint/config/remix/index.js",
+      "default": "./.dist/tools/oxlint/config/remix/index.js"
     },
     "./oxlint/tanstack": {
-      "types": "./dist/tools/oxlint/config/tanstack/index.d.ts",
-      "import": "./dist/tools/oxlint/config/tanstack/index.js",
-      "default": "./dist/tools/oxlint/config/tanstack/index.js"
+      "types": "./.dist/tools/oxlint/config/tanstack/index.d.ts",
+      "import": "./.dist/tools/oxlint/config/tanstack/index.js",
+      "default": "./.dist/tools/oxlint/config/tanstack/index.js"
     },
     "./oxlint/tanstack/js-plugins": {
-      "types": "./dist/tools/oxlint/config/tanstack/js-plugins/index.d.ts",
-      "import": "./dist/tools/oxlint/config/tanstack/js-plugins/index.js",
-      "default": "./dist/tools/oxlint/config/tanstack/js-plugins/index.js"
+      "types": "./.dist/tools/oxlint/config/tanstack/js-plugins/index.d.ts",
+      "import": "./.dist/tools/oxlint/config/tanstack/js-plugins/index.js",
+      "default": "./.dist/tools/oxlint/config/tanstack/js-plugins/index.js"
     },
     "./shared/ignores": {
-      "types": "./dist/tools/shared/ignores.d.ts",
-      "import": "./dist/tools/shared/ignores.js",
-      "default": "./dist/tools/shared/ignores.js"
+      "types": "./.dist/tools/shared/ignores.d.ts",
+      "import": "./.dist/tools/shared/ignores.js",
+      "default": "./.dist/tools/shared/ignores.js"
     },
     "./tsconfig-node": "./tsconfig.node.json",
     "./tsconfig-react": "./tsconfig.react.json",
@@ -68,7 +68,6 @@
   },
   "scripts": {
     "build": "bun run scripts/build.ts",
-    "prepare": "bun run build",
     "lint": "oxlint --config oxlint.config.ts",
     "lint:fix": "oxlint --config oxlint.config.ts --fix",
     "lint:agent": "oxlint --config oxlint.config.ts --deny-warnings --format=agent",

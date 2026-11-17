@@ -1,0 +1,47 @@
+name: dist sync
+
+# `.dist/` is committed because `github:` installs raw-clone the repo and
+# ignore `files`, so consumers consume the tracked bundle verbatim. A stale
+# `.dist` therefore ships broken JS and types with no install-time signal,
+# which makes drift a correctness bug rather than cosmetic.
+#
+# `.dist/` only moves when `tools/` changes, so the job is scoped to that
+# path and stays out of the way of everything else.
+on:
+  push:
+    branches: [main]
+    paths: ["tools/**"]
+  pull_request:
+    paths: ["tools/**"]
+
+permissions:
+  contents: read
+
+jobs:
+  dist-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - uses: jdx/mise-action@v5.2.9
+
+      - run: bun install --frozen-lockfile
+
+      - run: bun run build
+
+      - name: Fail if .dist is out of sync with tools/
+        run: |
+          if ! git diff --exit-code --stat -- .dist; then
+            echo
+            echo "::error::.dist/ is stale. Run 'bun run build' and commit the result."
+            exit 1
+          fi
+
+      - name: Fail if .dist is untracked
+        run: |
+          stray="$(git ls-files --others --exclude-standard -- .dist)"
+          if [ -n "$stray" ]; then
+            echo "$stray"
+            echo "::error::.dist/ has files that are not committed."
+            exit 1
+          fi
