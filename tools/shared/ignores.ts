@@ -75,3 +75,4 @@ export const ignorePatterns = [
   "**/pnpm-workspace.yaml",
   "**/mise.lock",
 ];
+
