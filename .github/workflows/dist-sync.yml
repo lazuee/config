@@ -5,14 +5,26 @@ name: dist sync
 # `.dist` therefore ships broken JS and types with no install-time signal,
 # which makes drift a correctness bug rather than cosmetic.
 #
-# `.dist/` only moves when `tools/` changes, so the job is scoped to that
-# path and stays out of the way of everything else.
+# `.dist/` only moves when the bundling source changes, so the job is scoped to
+# those paths and stays out of the way of everything else.
 on:
   push:
     branches: [main]
-    paths: ["tools/**"]
+    paths:
+      - "tools/**"
+      - "scripts/build.ts"
+      - "scripts/build-vendors.ts"
+      - "package.json"
+      - "bun.lock"
+      - "tsconfig*.json"
   pull_request:
-    paths: ["tools/**"]
+    paths:
+      - "tools/**"
+      - "scripts/build.ts"
+      - "scripts/build-vendors.ts"
+      - "package.json"
+      - "bun.lock"
+      - "tsconfig*.json"
 
 permissions:
   contents: read

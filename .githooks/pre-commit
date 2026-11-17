@@ -5,8 +5,8 @@
 # `files`, so whatever is committed is what consumers run. CI catches drift
 # after the push; this catches it before the commit exists.
 #
-# Only runs when the staged set touches `tools/`, the source the bundle is
-# built from, so doc, config and vet-only commits stay instant.
+# Only runs when the staged set touches something the bundle is built from,
+# so doc and vet-only commits stay instant.
 
 staged="$(git diff --cached --name-only --diff-filter=ACMR)"
 
@@ -17,7 +17,9 @@ if ! printf '%s\n' "$staged" | grep -vq '^\.dist/'; then
   exit 0
 fi
 
-printf '%s\n' "$staged" | grep -q '^tools/' || exit 0
+# `tools/` is the source; the rest change how it is bundled.
+printf '%s\n' "$staged" | grep -qE \
+  '^(tools/|scripts/build(\.ts|-vendors\.ts)$|package\.json$|bun\.lock$|tsconfig[^/]*\.json$)' || exit 0
 
 if ! bun run build >/dev/null 2>&1; then
   echo "pre-commit: build failed, run 'bun run build' to see why" >&2
